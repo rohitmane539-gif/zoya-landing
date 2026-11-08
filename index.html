@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#11111a" />
+  <meta name="description" content="Meet Zoya: a voice-first AI assistant for quick conversations, spoken replies, and handy browser shortcuts." />
+  <meta property="og:title" content="Zoya — voice, meet personality" />
+  <meta property="og:description" content="Talk or type. Get a little help, a spoken reply, and a shortcut to what’s next." />
+  <title>Zoya — voice, meet personality</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #11111a;
+      --paper: #f6f3ee;
+      --muted: #aaa9b8;
+      --pink: #ff9b9e;
+      --lilac: #bdabff;
+      --line: rgba(255,255,255,.13);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--ink); color: var(--paper); }
+    a { color: inherit; }
+    .shell { overflow: hidden; }
+    .hero-wrap {
+      position: relative;
+      isolation: isolate;
+      min-height: 690px;
+      background:
+        radial-gradient(ellipse at 77% 28%, rgba(136,92,216,.22), transparent 32%),
+        radial-gradient(ellipse at 69% 75%, rgba(255,123,143,.14), transparent 30%),
+        linear-gradient(135deg, #11111a 0%, #171520 58%, #201923 100%);
+    }
+    .hero-wrap::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; opacity: .12; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+    }
+    .nav, .hero, .section, footer { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+    .nav { height: 86px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:11px; text-decoration:none; font-size:19px; font-weight:700; letter-spacing:.02em; }
+    .brand-mark { width:33px; height:33px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(145deg,var(--pink),var(--lilac)); box-shadow:0 0 30px rgba(189,171,255,.26); }
+    .brand-mark svg { width:18px; height:18px; }
+    .nav-note { color:var(--muted); font-size:13px; letter-spacing:.08em; text-transform:uppercase; }
+    .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:68px; align-items:center; padding-block:94px 112px; }
+    .eyebrow { display:flex; align-items:center; gap:10px; color:#d8caff; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+    .eyebrow::before { content:""; width:22px; height:1px; background:var(--pink); }
+    h1 { max-width:650px; margin:24px 0 20px; font-size:clamp(48px,7vw,76px); line-height:.99; letter-spacing:-.065em; font-weight:650; }
+    h1 span { color:transparent; background:linear-gradient(100deg,var(--pink),#d0b7ff 76%); -webkit-background-clip:text; background-clip:text; }
+    .hero-copy { max-width:520px; color:#c5c2cf; font-size:18px; line-height:1.7; }
+    .cta-row { display:flex; align-items:center; gap:20px; margin-top:34px; flex-wrap:wrap; }
+    .cta { display:inline-flex; gap:10px; align-items:center; padding:14px 19px; border-radius:999px; color:#201a27; background:linear-gradient(105deg,#ffb2a6,#d4c1ff); text-decoration:none; font-size:14px; font-weight:750; transition:transform .2s ease, box-shadow .2s ease; box-shadow:0 8px 28px rgba(214,174,255,.12); }
+    .cta:hover { transform:translateY(-2px); box-shadow:0 12px 34px rgba(214,174,255,.23); }
+    .cta svg { width:16px; height:16px; }
+    .caption { color:#9d9aa9; font-size:13px; }
+    .visual { position:relative; display:grid; place-items:center; min-height:390px; }
+    .halo { position:absolute; width:min(390px,88vw); aspect-ratio:1; border-radius:50%; border:1px solid rgba(230,205,255,.14); box-shadow:0 0 0 34px rgba(230,205,255,.025),0 0 0 72px rgba(230,205,255,.018), inset 0 0 80px rgba(170,130,255,.06); }
+    .halo::before,.halo::after { content:""; position:absolute; border-radius:50%; border:1px solid rgba(255,176,174,.13); inset:36px; }
+    .halo::after { inset:73px; border-color:rgba(203,183,255,.15); }
+    .voice-card { width:min(355px,100%); position:relative; z-index:1; padding:25px; border:1px solid rgba(255,255,255,.16); border-radius:24px; background:linear-gradient(145deg,rgba(42,38,54,.94),rgba(29,26,38,.92)); box-shadow:0 28px 90px rgba(0,0,0,.38); backdrop-filter:blur(18px); }
+    .card-top { display:flex; align-items:center; justify-content:space-between; color:#b9b6c4; font-size:12px; letter-spacing:.09em; text-transform:uppercase; }
+    .live-dot { display:inline-block; width:7px; height:7px; margin-right:7px; border-radius:50%; background:#ff9b9e; box-shadow:0 0 12px #ff9b9e; }
+    .orb { width:124px; height:124px; margin:31px auto 24px; display:grid; place-items:center; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffe2d4 0%,#ffa3a8 26%,#ac83e8 66%,#6948a6 100%); box-shadow:0 0 42px rgba(195,144,255,.34), inset -10px -13px 28px rgba(39,22,69,.32); }
+    .orb svg { width:45px; height:45px; filter:drop-shadow(0 3px 10px rgba(63,34,79,.35)); }
+    .wave { height:35px; display:flex; justify-content:center; align-items:center; gap:4px; }
+    .wave i { display:block; width:3px; height:8px; border-radius:4px; background:linear-gradient(#ffd5c3,#d3baff); animation:pulse 1.15s ease-in-out infinite alternate; }
+    .wave i:nth-child(3n) { animation-delay:.2s; }.wave i:nth-child(2n) { animation-delay:.38s; }.wave i:nth-child(5n) { animation-delay:.58s; }
+    @keyframes pulse { to { height:25px; opacity:.55; } }
+    .card-label { margin-top:14px; text-align:center; color:#ece6f3; font-size:15px; }
+    .card-hint { margin-top:7px; text-align:center; color:#a9a4b4; font-size:12px; }
+    .section { padding-block:90px; }
+    .section-heading { max-width:650px; margin-bottom:42px; }
+    .kicker { color:#d1baff; font-size:12px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
+    h2 { margin:14px 0; font-size:clamp(34px,5vw,52px); line-height:1.06; letter-spacing:-.05em; font-weight:620; }
+    .section-heading p { margin:0; color:#aaa7b4; font-size:16px; line-height:1.7; }
+    .features { background:var(--paper); color:#1c1a22; }
+    .features .kicker { color:#765ba4; }
+    .features .section-heading p { color:#66616f; }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .feature { min-height:230px; padding:26px; border:1px solid rgba(34,29,43,.1); border-radius:20px; background:rgba(255,255,255,.68); }
+    .icon { width:42px; height:42px; display:grid; place-items:center; border-radius:13px; color:#49355f; background:linear-gradient(135deg,#ffe0d8,#e7ddff); }
+    .icon svg { width:21px; height:21px; }
+    .feature h3 { margin:25px 0 9px; font-size:19px; letter-spacing:-.02em; }
+    .feature p { margin:0; color:#66616f; line-height:1.65; font-size:14px; }
+    .how { display:grid; grid-template-columns:.8fr 1.2fr; gap:74px; align-items:start; }
+    .how .section-heading { margin:0; }
+    .steps { display:grid; gap:0; }
+    .step { display:grid; grid-template-columns:46px 1fr; gap:17px; padding:0 0 28px; }
+    .step + .step { padding-top:26px; border-top:1px solid var(--line); }
+    .num { width:36px; height:36px; display:grid; place-items:center; border:1px solid rgba(221,197,255,.3); border-radius:50%; color:#e8cfff; font-size:13px; }
+    .step h3 { margin:2px 0 8px; font-size:17px; }
+    .step p { margin:0; color:#aaa7b4; font-size:14px; line-height:1.7; }
+    .note { border-top:1px solid var(--line); padding-block:22px; color:#9693a0; font-size:12px; line-height:1.65; }
+    footer { display:flex; justify-content:space-between; gap:20px; padding-block:25px 36px; color:#8d8998; font-size:12px; }
+    @media (max-width:800px) {
+      .hero-wrap { min-height:unset; }
+      .hero { grid-template-columns:1fr; gap:30px; padding-block:72px 75px; }
+      .visual { min-height:350px; }
+      .halo { width:min(330px,80vw); }
+      .feature-grid { grid-template-columns:1fr; }
+      .feature { min-height:unset; }
+      .how { grid-template-columns:1fr; gap:42px; }
+    }
+    @media (max-width:480px) {
+      .nav,.hero,.section,footer { width:calc(100% - 36px); }
+      .nav { height:72px; }
+      .nav-note { font-size:10px; }
+      .hero { padding-block:58px 56px; }
+      .hero-copy { font-size:16px; }
+      .visual { min-height:315px; }
+      .voice-card { padding:20px; }
+      .orb { width:105px; height:105px; margin-block:25px 18px; }
+      .section { padding-block:68px; }
+      footer { flex-direction:column; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero-wrap">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="Zoya home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 13v-2m4 6V7m4 12V5m4 13V6m4 7v-2" stroke="#292037" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+          <span>Zoya</span>
+        </a>
+        <span class="nav-note">voice, meet personality</span>
+      </nav>
+      <main id="top" class="hero">
+        <div>
+          <div class="eyebrow">A voice-first AI companion</div>
+          <h1>Less typing.<br /><span>More Zoya.</span></h1>
+          <p class="hero-copy">A quick question, a little company, a spoken reply. Talk to Zoya naturally—or type when that’s easier—and move on with your day.</p>
+          <div class="cta-row">
+            <a class="cta" href="#how-it-works">See how it works <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <span class="caption">A little wit. A lot of conversation.</span>
+          </div>
+        </div>
+        <div class="visual" aria-label="Illustration of Zoya listening">
+          <div class="halo" aria-hidden="true"></div>
+          <div class="voice-card">
+            <div class="card-top"><span><i class="live-dot"></i>voice mode</span><span>01 / 03</span></div>
+            <div class="orb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="#fff8f4" stroke-width="1.6"/><path d="M6.5 10.5v.7a5.5 5.5 0 0 0 11 0v-.7M12 16.7V21m-3 0h6" stroke="#fff8f4" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="card-label">Say it your way.</div>
+            <div class="card-hint">Or switch to text whenever you like.</div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <section class="features" aria-labelledby="features-title">
+      <div class="section">
+        <div class="section-heading">
+          <span class="kicker">The good bits</span>
+          <h2 id="features-title">Conversation, with a little momentum.</h2>
+          <p>Zoya keeps the interaction simple: speak or type, get a response, and use handy shortcuts when you’re ready to go somewhere next.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" stroke-width="1.7"/><path d="M6.5 10.5v.7a5.5 5.5 0 0 0 11 0v-.7M12 16.7V21m-3 0h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+            <h3>Talk, don’t tap around</h3>
+            <p>Start a live voice conversation when hands-free feels right. Prefer quiet? Type your message instead.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10v4m4-8v12m4-15v18m4-14v10m4-7v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+            <h3>Hear a human-sounding reply</h3>
+            <p>Get a spoken answer back, and mute or unmute audio whenever you want a quieter moment.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M10 14 21 3m0 0h-7m7 0v7M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Hop to what’s next</h3>
+            <p>Quick browser shortcuts can open a website, YouTube, Spotify, or WhatsApp Web from a conversation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="section how" aria-labelledby="how-title">
+      <div class="section-heading">
+        <span class="kicker">Easy does it</span>
+        <h2 id="how-title">A few words get things moving.</h2>
+        <p>No complicated setup to understand. Just a simple way to talk, listen, or type.</p>
+      </div>
+      <div class="steps">
+        <article class="step"><span class="num">01</span><div><h3>Choose your mode</h3><p>Tap the microphone to start a live voice session, or open text input for a typed message.</p></div></article>
+        <article class="step"><span class="num">02</span><div><h3>Ask in your own words</h3><p>Chat naturally. Zoya is designed for short, conversational answers with a playful edge.</p></div></article>
+        <article class="step"><span class="num">03</span><div><h3>Keep the moment yours</h3><p>Mute audio when you need quiet, and use a browser shortcut when you want to jump to a supported site.</p></div></article>
+      </div>
+    </section>
+
+    <div class="note section" style="padding-top:20px;padding-bottom:20px">Zoya uses Google Gemini for AI responses. Voice mode needs microphone permission; browser shortcuts open the selected service in a new tab.</div>
+    <footer><span>© 2026 Zoya</span><span>Made for conversations that get straight to the point.</span></footer>
+  </div>
+</body>
+</html>
